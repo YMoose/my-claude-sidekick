@@ -1,0 +1,126 @@
+{
+    "data": [
+        {
+            "id": 1,
+            "url": "https://psycnet.apa.org/record/1993-40718-001",
+            "eprint_url": "",
+            "title": "The role of deliberate practice in the acquisition of expert performance.",
+            "year": 1993,
+            "authors": "Ericsson, K. A., Krampe, R. T.",
+            "venue": "Psychological Review",
+            "citations": 17172,
+            "cited": []
+        },
+        {
+            "id": 2,
+            "url": "https://pubmed.ncbi.nlm.nih.gov/7740089/",
+            "title": "Long-term Working Memory",
+            "year": 1995,
+            "doi": "10.1037/0033-295x.102.2.211",
+            "authors": "Ericsson, K. A., & Kintsch, W.",
+            "venue": "Psychological review",
+            "citations": 6012,
+            "cited": [
+                10
+            ]
+        },
+        {
+            "id": 3,
+            "url": "https://pubmed.ncbi.nlm.nih.gov/15522630/",
+            "title": "Neurocognitive mechanisms underlying the experience of flow",
+            "year": 2004,
+            "doi": "10.1016/j.concog.2004.07.002",
+            "authors": "Dietrich A.",
+            "venue": "Consciousness and cognitionrn",
+            "citations": 760,
+            "cited": []
+        },
+        {
+            "id": 4,
+            "url": "https://pubmed.ncbi.nlm.nih.gov/19743555/",
+            "title": "Toward a science of exceptional achievement: attaining superior performance through deliberate practice",
+            "year": 2009,
+            "doi": "10.1196/annals.1393.001",
+            "authors": "Ericsson, K. A., Nandagopal, K., & Roring, R. W.",
+            "venue": "Annals of the New York Academy of Sciences",
+            "citations": 377,
+            "cited": [1]
+        },
+        {
+            "id": 5,
+            "url": "https://pubmed.ncbi.nlm.nih.gov/23237467/",
+            "title": "Neurocognitive contributions to motor skill learning: the role of working memory",
+            "year": 2012,
+            "doi": "10.1080/00222895.2012.672348",
+            "authors": "Seidler, R. D., Bo, J., & Anguera, J. A.",
+            "venue": "venue of motor behavior",
+            "citations": 317,
+            "cited": []
+        },
+        {
+            "id": 6,
+            "url": "https://pubmed.ncbi.nlm.nih.gov/22546731/",
+            "title": "How chunks, long-term working memory and templates offer a cognitive explanation for neuroimaging data on expertise acquisition: a two-stage framework",
+            "year": 2012,
+            "doi": "10.1016/j.bandc.2012.01.010",
+            "authors": "Guida, A., Gobet, F., Tardieu, H., & Nicolas, S",
+            "venue": "Brain and cognition",
+            "citations": 225,
+            "cited": [
+                1,
+                2,
+                10
+            ]
+        },
+        {
+            "id": 7,
+            "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4605545/",
+            "title": "Neurocognitive architecture of working memory",
+            "year": 2015,
+            "doi": "10.1016/j.neuron.2015.09.020",
+            "authors": "Eriksson J, Vogel EK, Lansner A, Bergström F, Nyberg L.",
+            "venue": "Neuron",
+            "citations": 835,
+            "cited": [2]
+        },
+        {
+            "id": 8,
+            "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6663308/",
+            "title": "The effect of working memory maintenance on long-term memory",
+            "year": 2019,
+            "doi": "10.3758/s13421-019-00908-6",
+            "authors": "Hartshorne, J. K., & Makovski, T.",
+            "venue": "Memory & cognition",
+            "citations": 115,
+            "cited": [
+                2,
+                7
+            ]
+        },
+        {
+            "id": 9,
+            "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6824411/",
+            "title": "Deliberate Practice and Proposed Limits on the Effects of Practice on the Acquisition of Expert Performance: Why the Original Definition Matters and Recommendations for Future Research",
+            "year": 2019,
+            "doi": "10.3389/fpsyg.2019.02396",
+            "authors": "Ericsson KA, Harwell KW.",
+            "venue": "Front Psychol",
+            "citations": 479,
+            "cited": [
+                1,
+                4
+            ]
+        },
+        {
+            "id": 10,
+            "url": "",
+            "title": "Skilled memory",
+            "year": 1981,
+            "doi": "",
+            "authors": "Chase W. G., Ericsson K. A.",
+            "venue": "Cognitive Skills and Their Acquisition",
+            "citations": 820,
+            "cited": []
+        }
+    ]
+}

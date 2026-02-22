@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Citation Graph</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #1e1e1e;
+            color: #dcddde;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            overflow: hidden;
+        }
+
+        #container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        #graph-container {
+            width: 100%;
+            height: 100%;
+        }
+
+        #tooltip {
+            position: absolute;
+            background-color: #2d2d2d;
+            border: 1px solid #4a4a4a;
+            border-radius: 8px;
+            padding: 15px;
+            max-width: 350px;
+            max-height: 400px;
+            overflow-y: auto;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            z-index: 1000;
+        }
+
+        #tooltip.visible {
+            opacity: 1;
+        }
+
+        #tooltip h3 {
+            color: #7c3aed;
+            margin-bottom: 10px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        #tooltip .meta {
+            font-size: 12px;
+            color: #9ca3af;
+            margin-bottom: 8px;
+        }
+
+        #tooltip .meta span {
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        #tooltip .authors {
+            color: #60a5fa;
+        }
+
+        #tooltip .journal {
+            color: #34d399;
+        }
+
+        #tooltip .citation-count {
+            color: #fbbf24;
+            font-weight: bold;
+        }
+
+        #tooltip .doi {
+            color: #a78bfa;
+            word-break: break-all;
+        }
+
+        #tooltip .related {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid #4a4a4a;
+        }
+
+        #tooltip .related-title {
+            font-size: 11px;
+            color: #9ca3af;
+            margin-bottom: 6px;
+        }
+
+        #tooltip .related-list {
+            font-size: 11px;
+            color: #c4b5fd;
+            line-height: 1.5;
+        }
+
+        #tooltip .related-item {
+            margin-bottom: 4px;
+        }
+
+        #legend {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background-color: #2d2d2d;
+            border: 1px solid #4a4a4a;
+            border-radius: 8px;
+            padding: 15px;
+            font-size: 12px;
+        }
+
+        #legend h4 {
+            margin-bottom: 10px;
+            color: #9ca3af;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        #controls {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #2d2d2d;
+            border: 1px solid #4a4a4a;
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        #controls button {
+            background-color: #7c3aed;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-right: 8px;
+            font-size: 12px;
+            transition: background-color 0.2s;
+        }
+
+        #controls button:hover {
+            background-color: #6d28d9;
+        }
+
+        #controls button:last-child {
+            margin-right: 0;
+        }
+
+        #stats {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: #2d2d2d;
+            border: 1px solid #4a4a4a;
+            border-radius: 8px;
+            padding: 15px;
+            font-size: 13px;
+        }
+
+        #stats h3 {
+            color: #7c3aed;
+            margin-bottom: 8px;
+        }
+
+        #stats .stat-item {
+            color: #9ca3af;
+            margin-bottom: 4px;
+        }
+
+        #stats .stat-value {
+            color: #fbbf24;
+            font-weight: bold;
+        }
+
+        .link {
+            transition: stroke 0.2s, stroke-width 0.2s;
+        }
+
+        .node-circle {
+            cursor: pointer;
+            transition: opacity 0.2s, stroke 0.2s, stroke-width 0.2s;
+        }
+
+        .node-label {
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="stats">
+            <h3>Citation Graph</h3>
+            <div class="stat-item">Papers: <span class="stat-value">10</span></div>
+        </div>
+        <div id="graph-container"></div>
+        <div id="tooltip"></div>
+        <div id="legend">
+            <h4>Legend</h4>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #7c3aed;"></div>
+                <span>High citations (>1000)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #3b82f6;"></div>
+                <span>Medium citations (500-1000)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #6b7280;"></div>
+                <span>Low citations (<500)</span>
+            </div>
+        </div>
+        <div id="controls">
+            <button onclick="resetZoom()">Reset View</button>
+            <button onclick="toggleLabels()">Toggle Labels</button>
+        </div>
+    </div>
+
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script>
+        // Paper data
+        const data = {
+  "data": [
+    {
+      "id": 1,
+      "url": "https://psycnet.apa.org/record/1993-40718-001",
+      "eprint_url": "",
+      "title": "The role of deliberate practice in the acquisition of expert performance.",
+      "year": 1993,
+      "authors": "Ericsson, K. A., Krampe, R. T.",
+      "venue": "Psychological Review",
+      "citations": 17172,
+      "cited": []
+    },
+    {
+      "id": 2,
+      "url": "https://pubmed.ncbi.nlm.nih.gov/7740089/",
+      "title": "Long-term Working Memory",
+      "year": 1995,
+      "doi": "10.1037/0033-295x.102.2.211",
+      "authors": "Ericsson, K. A., & Kintsch, W.",
+      "venue": "Psychological review",
+      "citations": 6012,
+      "cited": [
+        10
+      ]
+    },
+    {
+      "id": 3,
+      "url": "https://pubmed.ncbi.nlm.nih.gov/15522630/",
+      "title": "Neurocognitive mechanisms underlying the experience of flow",
+      "year": 2004,
+      "doi": "10.1016/j.concog.2004.07.002",
+      "authors": "Dietrich A.",
+      "venue": "Consciousness and cognitionrn",
+      "citations": 760,
+      "cited": []
+    },
+    {
+      "id": 4,
+      "url": "https://pubmed.ncbi.nlm.nih.gov/19743555/",
+      "title": "Toward a science of exceptional achievement: attaining superior performance through deliberate practice",
+      "year": 2009,
+      "doi": "10.1196/annals.1393.001",
+      "authors": "Ericsson, K. A., Nandagopal, K., & Roring, R. W.",
+      "venue": "Annals of the New York Academy of Sciences",
+      "citations": 377,
+      "cited": [
+        1
+      ]
+    },
+    {
+      "id": 5,
+      "url": "https://pubmed.ncbi.nlm.nih.gov/23237467/",
+      "title": "Neurocognitive contributions to motor skill learning: the role of working memory",
+      "year": 2012,
+      "doi": "10.1080/00222895.2012.672348",
+      "authors": "Seidler, R. D., Bo, J., & Anguera, J. A.",
+      "venue": "venue of motor behavior",
+      "citations": 317,
+      "cited": []
+    },
+    {
+      "id": 6,
+      "url": "https://pubmed.ncbi.nlm.nih.gov/22546731/",
+      "title": "How chunks, long-term working memory and templates offer a cognitive explanation for neuroimaging data on expertise acquisition: a two-stage framework",
+      "year": 2012,
+      "doi": "10.1016/j.bandc.2012.01.010",
+      "authors": "Guida, A., Gobet, F., Tardieu, H., & Nicolas, S",
+      "venue": "Brain and cognition",
+      "citations": 225,
+      "cited": [
+        1,
+        2,
+        10
+      ]
+    },
+    {
+      "id": 7,
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4605545/",
+      "title": "Neurocognitive architecture of working memory",
+      "year": 2015,
+      "doi": "10.1016/j.neuron.2015.09.020",
+      "authors": "Eriksson J, Vogel EK, Lansner A, Bergström F, Nyberg L.",
+      "venue": "Neuron",
+      "citations": 835,
+      "cited": [
+        2
+      ]
+    },
+    {
+      "id": 8,
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6663308/",
+      "title": "The effect of working memory maintenance on long-term memory",
+      "year": 2019,
+      "doi": "10.3758/s13421-019-00908-6",
+      "authors": "Hartshorne, J. K., & Makovski, T.",
+      "venue": "Memory & cognition",
+      "citations": 115,
+      "cited": [
+        2,
+        7
+      ]
+    },
+    {
+      "id": 9,
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6824411/",
+      "title": "Deliberate Practice and Proposed Limits on the Effects of Practice on the Acquisition of Expert Performance: Why the Original Definition Matters and Recommendations for Future Research",
+      "year": 2019,
+      "doi": "10.3389/fpsyg.2019.02396",
+      "authors": "Ericsson KA, Harwell KW.",
+      "venue": "Front Psychol",
+      "citations": 479,
+      "cited": [
+        1,
+        4
+      ]
+    },
+    {
+      "id": 10,
+      "url": "",
+      "title": "Skilled memory",
+      "year": 1981,
+      "doi": "",
+      "authors": "Chase W. G., Ericsson K. A.",
+      "venue": "Cognitive Skills and Their Acquisition",
+      "citations": 820,
+      "cited": []
+    }
+  ]
+};
+
+        // Build nodes
+        const nodes = data.data.map(paper => ({
+            id: paper.id,
+            title: paper.title,
+            year: paper.year,
+            authors: paper.authors,
+            venue: paper.venue,
+            citations: paper.citations || 0,
+            cited: paper.cited || [],
+            url: paper.url || '',
+            eprint_url: paper.eprint_url || '',
+            doi: paper.doi || ''
+        }));
+
+        // Build links from cited array
+        const links = [];
+        data.data.forEach(paper => {
+            if (paper.cited) {
+                paper.cited.forEach(citedId => {
+                    links.push({
+                        source: paper.id,
+                        target: citedId,
+                        type: 'cites'
+                    });
+                });
+            }
+        });
+
+        // Get color based on citation count
+        function getNodeColor(citationCount) {
+            if (citationCount > 1000) return '#7c3aed';
+            if (citationCount > 500) return '#3b82f6';
+            return '#6b7280';
+        }
+
+        // Get node size based on citations (logarithmic scale)
+        function getNodeSize(citations) {
+            const minSize = 10;
+            const maxSize = 45;
+            // Use sqrt scale for more pronounced differences
+            const normalized = Math.sqrt(citations) / Math.sqrt(20000); // normalize to max expected ~20000
+            return minSize + (maxSize - minSize) * Math.min(normalized, 1);
+        }
+
+        // Setup SVG
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+
+        const svg = d3.select('#graph-container')
+            .append('svg')
+            .attr('width', width)
+            .attr('height', height);
+
+        // Create container for zoom
+        const container = svg.append('g');
+
+        // Create zoom behavior
+        const zoom = d3.zoom()
+            .scaleExtent([0.1, 4])
+            .on('zoom', (event) => {
+                container.attr('transform', event.transform);
+            });
+
+        svg.call(zoom);
+
+        // Create arrow marker
+        svg.append('defs').append('marker')
+            .attr('id', 'arrowhead')
+            .attr('viewBox', '-0 -5 10 10')
+            .attr('refX', 20)
+            .attr('refY', 0)
+            .attr('orient', 'auto')
+            .attr('markerWidth', 6)
+            .attr('markerHeight', 6)
+            .append('path')
+            .attr('d', 'M 0,-5 L 10,0 L 0,5')
+            .attr('fill', '#4a4a4a');
+
+        // Create force simulation
+        const simulation = d3.forceSimulation(nodes)
+            .force('link', d3.forceLink(links).id(d => d.id).distance(180))
+            .force('charge', d3.forceManyBody().strength(-500))
+            .force('center', d3.forceCenter(width / 2, height / 2))
+            .force('collision', d3.forceCollide().radius(d => getNodeSize(d.citations) + 15));
+
+        // Create links
+        const link = container.append('g')
+            .selectAll('line')
+            .data(links)
+            .enter()
+            .append('line')
+            .attr('stroke', '#4a4a4a')
+            .attr('stroke-width', 1.5)
+            .attr('marker-end', 'url(#arrowhead)')
+            .attr('class', 'link')
+            .attr('data-source', d => d.source.id || d.source)
+            .attr('data-target', d => d.target.id || d.target);
+
+        // Create node groups
+        const node = container.append('g')
+            .selectAll('g')
+            .data(nodes)
+            .enter()
+            .append('g')
+            .attr('class', 'node')
+            .attr('data-id', d => d.id)
+            .call(d3.drag()
+                .on('start', dragstarted)
+                .on('drag', dragged)
+                .on('end', dragended));
+
+        // Add circles to nodes
+        node.append('circle')
+            .attr('r', d => getNodeSize(d.citations))
+            .attr('fill', d => getNodeColor(d.citations))
+            .attr('stroke', '#fff')
+            .attr('stroke-width', 2)
+            .attr('class', 'node-circle');
+
+        // Truncate title for display
+        function truncateTitle(title, maxLen) {
+            if (!title) return '';
+            return title.length > maxLen ? title.substring(0, maxLen) + '...' : title;
+        }
+
+        // Add labels with title (wrapped text)
+        const labels = node.append('text')
+            .attr('text-anchor', 'middle')
+            .attr('dy', -2)
+            .attr('fill', '#fff')
+            .attr('font-size', '9px')
+            .attr('font-weight', '500')
+            .attr('class', 'node-label')
+            .each(function(d) {
+                const text = d3.select(this);
+                const title = truncateTitle(d.title, 50);
+                const words = title.split(' ');
+                let line1 = '';
+                let line2 = '';
+
+                // Split into two lines
+                words.forEach(word => {
+                    if (line1.length < 15) {
+                        line1 += (line1 ? ' ' : '') + word;
+                    } else if (line2.length < 15) {
+                        line2 += (line2 ? ' ' : '') + word;
+                    }
+                });
+
+                text.append('tspan')
+                    .attr('x', 0)
+                    .attr('dy', 0)
+                    .text(line1);
+
+                if (line2) {
+                    text.append('tspan')
+                        .attr('x', 0)
+                        .attr('dy', 11)
+                        .text(line2);
+                }
+            });
+
+        // Tooltip
+        const tooltip = document.getElementById('tooltip');
+
+        // Get related nodes (cited by this + citing this)
+        function getRelatedNodes(paperId) {
+            const related = new Set();
+            const paper = nodes.find(n => n.id === paperId);
+
+            if (!paper) return related;
+
+            // Papers this paper cites
+            paper.cited.forEach(id => related.add(id));
+
+            // Papers that cite this paper
+            nodes.forEach(n => {
+                if (n.cited.includes(paperId)) {
+                    related.add(n.id);
+                }
+            });
+
+            return related;
+        }
+
+        // Get paper by id
+        function getPaperById(id) {
+            return nodes.find(n => n.id === id);
+        }
+
+        // Truncate text
+        function truncate(text, maxLen) {
+            return text.length > maxLen ? text.substring(0, maxLen) + '...' : text;
+        }
+
+        // Show tooltip
+        function showTooltip(event, d) {
+            const related = getRelatedNodes(d.id);
+            const citedPapers = d.cited.map(id => {
+                const p = getPaperById(id);
+                return p ? { id: id, title: p.title } : { id: id, title: `Paper ${id}` };
+            });
+            const citingPapers = nodes.filter(n => n.cited.includes(d.id)).map(n => ({
+                id: n.id,
+                title: n.title
+            }));
+
+            let relatedHtml = '';
+            if (citedPapers.length > 0) {
+                relatedHtml += `<div class="related-title">Cites (${citedPapers.length}):</div>`;
+                relatedHtml += `<div class="related-list">${citedPapers.map(p =>
+                    `<div class="related-item">&rarr; [${p.id}] ${truncate(p.title, 45)}</div>`
+                ).join('')}</div>`;
+            }
+            if (citingPapers.length > 0) {
+                relatedHtml += `<div class="related-title" style="margin-top: 8px;">Cited by (${citingPapers.length}):</div>`;
+                relatedHtml += `<div class="related-list">${citingPapers.map(p =>
+                    `<div class="related-item">&larr; [${p.id}] ${truncate(p.title, 45)}</div>`
+                ).join('')}</div>`;
+            }
+
+            tooltip.innerHTML = `
+                <h3>${d.title}</h3>
+                <div class="meta">
+                    <span class="authors">Authors: ${d.authors}</span>
+                    <span class="journal">Venue: ${d.venue}</span>
+                    <span>Year: ${d.year}</span>
+                    <span class="citation-count">Citations: ${d.citations.toLocaleString()}</span>
+                    ${d.doi ? `<span class="doi">DOI: ${d.doi}</span>` : ''}
+                </div>
+                ${relatedHtml ? `<div class="related">${relatedHtml}</div>` : ''}
+            `;
+
+            updateTooltipPosition(event);
+            tooltip.classList.add('visible');
+            highlightRelated(d.id, related);
+        }
+
+        // Update tooltip position
+        function updateTooltipPosition(event) {
+            const x = event.pageX + 20;
+            const y = event.pageY - 10;
+            const tooltipRect = tooltip.getBoundingClientRect();
+
+            // Keep tooltip within viewport
+            const maxX = window.innerWidth - tooltipRect.width - 20;
+            const maxY = window.innerHeight - tooltipRect.height - 20;
+
+            tooltip.style.left = `${Math.min(x, maxX)}px`;
+            tooltip.style.top = `${Math.min(y, maxY)}px`;
+        }
+
+        // Hide tooltip
+        function hideTooltip() {
+            tooltip.classList.remove('visible');
+            resetHighlight();
+        }
+
+        // Highlight related nodes
+        function highlightRelated(nodeId, relatedIds) {
+            // Dim all nodes
+            node.selectAll('circle')
+                .transition()
+                .duration(200)
+                .attr('opacity', 0.2);
+
+            // Highlight selected node
+            node.filter(d => d.id === nodeId)
+                .selectAll('circle')
+                .transition()
+                .duration(200)
+                .attr('opacity', 1)
+                .attr('stroke', '#f59e0b')
+                .attr('stroke-width', 4);
+
+            // Highlight related nodes
+            node.filter(d => relatedIds.has(d.id))
+                .selectAll('circle')
+                .transition()
+                .duration(200)
+                .attr('opacity', 1)
+                .attr('stroke', '#10b981')
+                .attr('stroke-width', 3);
+
+            // Dim all links
+            link.transition()
+                .duration(200)
+                .attr('stroke', '#2d2d2d')
+                .attr('stroke-width', 1);
+
+            // Highlight connected links
+            link.filter(l => {
+                const sourceId = l.source.id || l.source;
+                const targetId = l.target.id || l.target;
+                return sourceId === nodeId || targetId === nodeId;
+            })
+                .transition()
+                .duration(200)
+                .attr('stroke', '#7c3aed')
+                .attr('stroke-width', 2.5);
+        }
+
+        // Reset highlight
+        function resetHighlight() {
+            node.selectAll('circle')
+                .transition()
+                .duration(200)
+                .attr('opacity', 1)
+                .attr('stroke', '#fff')
+                .attr('stroke-width', 2);
+
+            link.transition()
+                .duration(200)
+                .attr('stroke', '#4a4a4a')
+                .attr('stroke-width', 1.5);
+        }
+
+        // Event listeners
+        node.on('mouseover', function(event, d) {
+            showTooltip(event, d);
+        })
+        .on('mousemove', function(event, d) {
+            updateTooltipPosition(event);
+        })
+        .on('mouseout', function() {
+            hideTooltip();
+        });
+
+        // Click to open paper URL
+        node.on('click', function(event, d) {
+            const targetUrl = d.url || d.eprint_url;
+            if (targetUrl) {
+                window.open(targetUrl, '_blank');
+            }
+        });
+
+        // Update positions on simulation tick
+        simulation.on('tick', () => {
+            link
+                .attr('x1', d => d.source.x)
+                .attr('y1', d => d.source.y)
+                .attr('x2', d => d.target.x)
+                .attr('y2', d => d.target.y);
+
+            node.attr('transform', d => `translate(${d.x},${d.y})`);
+        });
+
+        // Drag functions
+        function dragstarted(event, d) {
+            if (!event.active) simulation.alphaTarget(0.3).restart();
+            d.fx = d.x;
+            d.fy = d.y;
+        }
+
+        function dragged(event, d) {
+            d.fx = event.x;
+            d.fy = event.y;
+        }
+
+        function dragended(event, d) {
+            if (!event.active) simulation.alphaTarget(0);
+            d.fx = null;
+            d.fy = null;
+        }
+
+        // Control functions
+        function resetZoom() {
+            svg.transition()
+                .duration(500)
+                .call(zoom.transform, d3.zoomIdentity);
+            resetHighlight();
+        }
+
+        let showLabels = true;
+        function toggleLabels() {
+            showLabels = !showLabels;
+            labels.attr('opacity', showLabels ? 1 : 0);
+        }
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            const newWidth = window.innerWidth;
+            const newHeight = window.innerHeight;
+            svg.attr('width', newWidth).attr('height', newHeight);
+            simulation.force('center', d3.forceCenter(newWidth / 2, newHeight / 2));
+            simulation.alpha(0.3).restart();
+        });
+    </script>
+</body>
+</html>
