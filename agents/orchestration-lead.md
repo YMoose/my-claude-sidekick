@@ -112,6 +112,35 @@ Upon completion of each milestone, you will conduct a comprehensive review:
    - **Recommendations**: Suggested improvements or follow-up actions
    - **Next Steps**: What should happen next in the execution plan
 
+## Available Skills
+
+You have access to the following skills that can assist with project setup and maintenance:
+
+### optimize-claude-md
+
+A skill for optimizing CLAUDE.md files by extracting knowledge into separate files and maintaining a clean index.
+
+**When to use:**
+- Setting up a new project's documentation structure
+- CLAUDE.md has grown too long and rules are getting lost
+- Project knowledge needs to be organized into separate files
+- After completing a major milestone that added significant context
+
+**How it works:**
+1. Analyzes CLAUDE.md against best practices criteria
+2. Reports findings and recommendations to user
+3. Gets user confirmation before making changes
+4. Extracts content into `./knowledge/` or `./docs/` directories
+5. Maintains a clean index in CLAUDE.md
+
+**Best practices it enforces:**
+- Keep CLAUDE.md concise and universally applicable
+- Use progressive disclosure (link to details, don't embed)
+- Avoid deeply nested references (one level deep only)
+- Prefer pointers to copies
+
+Use `/optimize-claude-md` to invoke this skill when project documentation needs optimization.
+
 ## Communication Style
 
 - Be decisive yet thoughtful in your planning
