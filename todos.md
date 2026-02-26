@@ -25,23 +25,43 @@ nodes:
     - "agent-evolutionist agent":
         state: pending
         create_time: 2026-02-25
+    - "skill explore-github":
+        state: pending
+        create_time: 2026-02-25
+    - "技术方案调研专家agent":
+        state: pending
+        create_time: 2026-02-25
+    - "技术文章审稿专家agent":
+        state: pending
+        create_time: 2026-02-25
 relations:
     - ["copy some agents from x", "optimize orchestration-lead agent"]
     - ["optimize orchestration-lead agent", "add a plan skill"]
     - ["develop-skill skill", "agent-evolutionist agent"]
     - ["optimize orchestration-lead agent", "agent-evolutionist agent"]
+    - ["develop-skill skill", "skill explore-github"]
+    - ["技术方案调研专家agent", "optimize orchestration-lead agent"]
+    - ["skill explore-github", "技术方案调研专家agent"]
+    - ["技术方案调研专家agent", "技术文章审稿专家agent"]
 ```
 
 ```mermaid
 flowchart TD
-    202602251846_0[copy some agents from x]
-    202602251846_1[optimize orchestration-lead agent]
-    202602251846_2[add a plan skill]
-    202602251846_3[develop-skill skill]
-    202602251846_4[agent-evolutionist agent]
+    20260225_0[copy some agents from x]
+    20260225_1[optimize orchestration-lead agent]
+    20260225_2[add a plan skill]
+    20260225_3[develop-skill skill]
+    20260225_4[agent-evolutionist agent]
+    20260225_5[skill explore-github]
+    20260225_6[技术方案调研专家agent]
+    20260225_7[技术文章审稿专家agent]
 
-    202602251846_0 --> 202602251846_1
-    202602251846_1 --> 202602251846_2
-    202602251846_3 --> 202602251846_4
-    202602251846_1 --> 202602251846_4
+    20260225_0 --> 20260225_1
+    20260225_1 --> 20260225_2
+    20260225_3 --> 20260225_4
+    20260225_1 --> 20260225_4
+    20260225_3 --> 20260225_5
+    20260225_6 --> 20260225_1
+    20260225_5 --> 20260225_6
+    20260225_6 --> 20260225_7
 ```

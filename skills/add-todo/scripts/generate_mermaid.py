@@ -70,9 +70,17 @@ def parse_json(json_str: str) -> Tuple[List[Dict], List[Tuple[str, str]]]:
     return nodes, relations
 
 
-def generate_node_id(index: int) -> str:
-    """Generate unique node ID."""
-    timestamp = datetime.now().strftime("%Y%m%d%H%M")
+def generate_node_id(index: int, create_time: str = None) -> str:
+    """Generate unique node ID from create_time or current time."""
+    if create_time:
+        # Parse date like "2026-02-25" and convert to YYYYMMDD format
+        try:
+            dt = datetime.strptime(create_time, "%Y-%m-%d")
+            timestamp = dt.strftime("%Y%m%d")
+        except ValueError:
+            timestamp = datetime.now().strftime("%Y%m%d")
+    else:
+        timestamp = datetime.now().strftime("%Y%m%d")
     return f"{timestamp}_{index}"
 
 
@@ -82,7 +90,8 @@ def generate_mermaid(nodes: List[Dict], relations: List[Tuple[str, str]]) -> str
 
     name_to_id = {}
     for i, node in enumerate(nodes):
-        node_id = generate_node_id(i)
+        create_time = node.get("create_time")
+        node_id = generate_node_id(i, create_time)
         name = node.get("name", node.get("task", ""))
         name_to_id[name] = node_id
         safe_name = name.replace('"', "'")
