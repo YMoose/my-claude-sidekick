@@ -54,15 +54,15 @@ relations:
 
 ```mermaid
 flowchart TD
-    20260225_0[copy some agents from x]
-    20260225_1[optimize orchestration-lead agent]
-    20260225_2[add a plan skill]
-    20260225_3[develop-skill skill]
-    20260225_4[agent-evolutionist agent]
-    20260225_5[skill explore-github]
-    20260225_6[技术方案调研专家agent]
-    20260225_7[技术文章审稿专家agent]
-    20260226_8[learning context Engineering (Prompt Engineering)]
+    20260225_0["copy some agents from x"]
+    20260225_1["optimize orchestration-lead agent"]
+    20260225_2["add a plan skill"]
+    20260225_3["develop-skill skill"]
+    20260225_4["agent-evolutionist agent"]
+    20260225_5["skill explore-github"]
+    20260225_6["技术方案调研专家agent"]
+    20260225_7["技术文章审稿专家agent"]
+    20260226_8["learning context Engineering (Prompt Engineering)"]
 
     20260225_0 --> 20260225_1
     20260225_1 --> 20260225_2

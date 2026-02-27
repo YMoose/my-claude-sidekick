@@ -95,7 +95,7 @@ def generate_mermaid(nodes: List[Dict], relations: List[Tuple[str, str]]) -> str
         name = node.get("name", node.get("task", ""))
         name_to_id[name] = node_id
         safe_name = name.replace('"', "'")
-        lines.append(f'    {node_id}[{safe_name}]')
+        lines.append(f'    {node_id}["{safe_name}"]')
 
     lines.append("")
 
