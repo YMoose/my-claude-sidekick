@@ -1,9 +1,11 @@
+# Methodology guidelines
+
 ## Progressive disclosure patterns
 
-SKILL.md serves as an overview that points Claude to detailed materials as needed, like a table of contents in an onboarding guide. For an explanation of how progressive disclosure works, see [How Skills work](/docs/en/agents-and-tools/agent-skills/overview#how-skills-work) in the overview.
+Claude should learn from documents in progressive disclosure patterns. Some documents serves as an index that points to detailed materials as further needed, like a table of contents in an onboarding guide.  
 
 **Practical guidance:**
-- Keep SKILL.md body under 500 lines for optimal performance
+- Keep documents under 500 lines for optimal performance
 - Split content into separate files when approaching this limit
 - Use the patterns below to organize instructions, code, and resources effectively
 
@@ -203,7 +205,7 @@ The old patterns section provides historical context without cluttering the main
 
 ### Use consistent terminology
 
-Choose one term and use it throughout the Skill:
+Choose one term and use it throughout all the documents:
 
 **Good - Consistent**:
 - Always "API endpoint"
@@ -218,6 +220,8 @@ Choose one term and use it throughout the Skill:
 Consistency helps Claude understand and follow instructions.
 
 ## Evaluation and iteration
+
+Some documents is made with purposes.
 
 ### Build evaluations first
 

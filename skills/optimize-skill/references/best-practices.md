@@ -1,58 +1,54 @@
 # Skill authoring best practices
 
-Learn how to write effective Skills that Claude can discover and use successfully.
-
----
-
-Good Skills are concise, well-structured, and tested with real usage.
+Good effective Skills are concise, well-structured, and tested with real usage. so they can be discovered and used successfully
 
 ## Core principles
 
 ### Concise is key
 
-**Default assumption**: Claude is already very smart And he knows most common knowledge.
+**Default assumption**: Claude is already very smart and knows most of gereral knowledge.
 
-Only add context Claude doesn't already have. Challenge each piece of information(Especially fact descriptions):
+Only add context Claude doesn't already have. Challenge each piece of information (especially about fact descriptions) or you can just ask Claude:
 - "Does Claude really need this explanation?"
 - "Can I assume Claude knows this?"
 - "Does this paragraph justify its token cost?"
 
-### Set appropriate degrees of freedom
+Then remove redundancy.
 
-Match the level of specificity to the task's fragility and variability.
+### Appropriate degrees of freedom
+
+Degrees of freedom are used to describe a task's fragility and variability.
+
+We must match the level of specificity of our techniques to the task's degrees of freedom.
 
 **High freedom** (text-based instructions):
 
-Use when:
+Use when tasks are:
 - Multiple approaches are valid
 - Decisions depend on context
 - Heuristics guide the approach
 
 **Medium freedom** (pseudocode or scripts with flexible parameters):
 
-Use when:
+Use when tasks are:
 - A preferred pattern (template) exists
 - Some variation is acceptable
 - Configuration affects behavior
 
 **Low freedom** (specific scripts, few or no parameters):
 
-Use when:
+Use when tasks are:
 - Operations are fragile and error-prone
 - Consistency is critical
 - A specific sequence must be followed
 
-**The skill's degree of freedom should match model**:
-- **Claude Haiku** (fast, economical): Does the Skill provide enough guidance?
-- **Claude Sonnet** (balanced): Is the Skill clear and efficient?
-- **Claude Opus** (powerful reasoning): Does the Skill avoid over-explaining?
+## Skill Constitution
 
-What works perfectly for Opus might need more detail for Haiku. If you plan to use your Skill across multiple models, aim for instructions that work well with all of them.
+### SKILL.md 
 
-## Skill structure
+#### YAML Frontmatter
 
-<Note>
-**YAML Frontmatter**: The SKILL.md frontmatter requires two fields:
+The SKILL.md frontmatter requires two fields:
 
 `name`:
 - Maximum 64 characters
@@ -66,8 +62,7 @@ What works perfectly for Opus might need more detail for Haiku. If you plan to u
 - Cannot contain XML tags
 - Should describe what the Skill does and when to use it
 
-
-### Naming conventions
+##### Naming conventions
 
 Use consistent naming patterns to make Skills easier to reference and discuss. Consider using **gerund form** (verb + -ing) for Skill names, as this clearly describes the activity or capability the Skill provides.
 
@@ -83,7 +78,7 @@ Remember that the `name` field must use lowercase letters, numbers, and hyphens 
 - Reserved words: `anthropic-helper`, `claude-tools`
 - Inconsistent patterns within your skill collection
 
-### Writing effective descriptions
+##### Writing effective descriptions
 
 <Warning>
 **Always write in third person**. The description is injected into the system prompt, and inconsistent point-of-view can cause discovery problems.
@@ -97,9 +92,18 @@ Remember that the `name` field must use lowercase letters, numbers, and hyphens 
 
 Your description must provide enough detail for Claude to know when to select this Skill, while the rest of SKILL.md provides the implementation details.
 
-### Workflows and feedback loops
+##### Model
 
-### Use workflows for complex tasks
+**choose a appropriate model according to the skill's degree of freedom**:
+- **Claude Haiku** (fast, economical): Does the Skill provide enough guidance?
+- **Claude Sonnet** (balanced): Is the Skill clear and efficient?
+- **Claude Opus** (powerful reasoning): Does the Skill avoid over-explaining?
+
+What works perfectly for Opus might need more detail for Haiku. If you plan to use your Skill across multiple models, aim for instructions that work well with all of them.
+
+#### Workflows 
+
+##### Use workflows for complex tasks
 
 Break complex operations into clear, sequential steps. For particularly complex workflows, provide a checklist that Claude can copy into its response and check off as it progresses.
 
@@ -190,7 +194,7 @@ If verification fails, return to Step 2.
 
 Clear steps prevent Claude from skipping critical validation. The checklist helps both Claude and you track progress through multi-step workflows.
 
-#### Implement feedback loops
+##### Implement feedback loops
 
 **Common pattern**: Run validator → fix errors → repeat
 
@@ -234,7 +238,7 @@ This shows the validation loop pattern using reference documents instead of scri
 
 The validation loop catches errors early.
 
-#### Conditional workflow pattern
+##### Conditional workflow pattern
 
 Guide Claude through decision points:
 
@@ -262,7 +266,7 @@ Guide Claude through decision points:
 If workflows become large or complicated with many steps, consider pushing them into separate files and tell Claude to read the appropriate file based on the task at hand.
 </Tip>
 
-#### Create verifiable intermediate outputs
+##### Create verifiable intermediate outputs
 
 When Claude performs complex, open-ended tasks, it can make mistakes. The "plan-validate-execute" pattern catches errors early by having Claude first create a plan in a structured format, then validate that plan with a script before executing it.
 
@@ -279,8 +283,6 @@ When Claude performs complex, open-ended tasks, it can make mistakes. The "plan-
 **When to use**: Batch operations, destructive changes, complex validation rules, high-stakes operations.
 
 **Implementation tip**: Make validation scripts verbose with specific error messages like "Field 'signature_date' not found. Available fields: customer_name, order_total, signature_date_signed" to help Claude fix issues.
-
-### Common patterns
 
 ### Template pattern
 
@@ -381,8 +383,8 @@ Examples help Claude understand the desired style and level of detail more clear
 
 Always use forward slashes in file paths, even on Windows:
 
-- ✓ **Good**: `scripts/helper.py`, `reference/guide.md`
-- ✗ **Avoid**: `scripts\helper.py`, `reference\guide.md`
+- **Good**: `scripts/helper.py`, `reference/guide.md`
+- **Avoid**: `scripts\helper.py`, `reference\guide.md`
 
 Unix-style paths work across all platforms, while Windows-style paths cause errors on Unix systems.
 
@@ -403,11 +405,13 @@ import pdfplumber
 For scanned PDFs requiring OCR, use pdf2image with pytesseract instead."
 ````
 
-## Advanced: Skills with executable code
+### Tools in skills
 
 The sections below focus on Skills that include executable scripts. If your Skill uses only markdown instructions, skip to [Checklist for effective Skills](#checklist-for-effective-skills).
 
-### Solve, don't punt
+#### scripts
+
+##### Solve, don't punt
 
 When writing scripts for Skills, handle error conditions rather than punting to Claude.
 
@@ -456,7 +460,7 @@ TIMEOUT = 47  # Why 47?
 RETRIES = 5  # Why 5?
 ```
 
-### Provide utility scripts
+##### Provide utility scripts
 
 Even if Claude could write a script, pre-made scripts offer advantages:
 
@@ -508,29 +512,7 @@ python scripts/fill_form.py input.pdf fields.json output.pdf
 ```
 ````
 
-### Use visual analysis
-
-When inputs can be rendered as images, have Claude analyze them:
-
-````markdown
-## Form layout analysis
-
-1. Convert PDF to images:
-   ```bash
-   python scripts/pdf_to_images.py form.pdf
-   ```
-
-2. Analyze each page image to identify form fields
-3. Claude can see field locations and types visually
-````
-
-<Note>
-In this example, you'd need to write the `pdf_to_images.py` script.
-</Note>
-
-Claude's vision capabilities help understand layouts and structures.
-
-### MCP tool references
+#### MCP tool references
 
 If your Skill uses MCP (Model Context Protocol) tools, always use fully qualified tool names to avoid "tool not found" errors.
 
