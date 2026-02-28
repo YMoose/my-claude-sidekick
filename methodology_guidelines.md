@@ -2,7 +2,7 @@
 
 ## Progressive disclosure patterns
 
-Claude should learn from documents in progressive disclosure patterns. Some documents serves as an index that points to detailed materials as further needed, like a table of contents in an onboarding guide.  
+if Claude could learn from documents in progressive disclosure patterns. Some documents serves as an index that points to detailed materials as further needed, like a table of contents in an onboarding guide, Then The cost will be saved.
 
 **Practical guidance:**
 - Keep documents under 500 lines for optimal performance
@@ -221,9 +221,11 @@ Consistency helps Claude understand and follow instructions.
 
 ## Evaluation and iteration
 
-Some documents is made with purposes.
+Some documents is made with purposes.比如 skills.md. 这些文档应该随着使用而不断地迭代更新。
 
 ### Build evaluations first
+
+根据使用的目的创建一个评价的方法，当然，这个评价方法本身也可能是需要迭代更新的。我还听说过一种方法，就是将某一些文档做成 skills，然后让 skills 执行的成功与否来作为这个文档是否过时的标准。
 
 **Create evaluations BEFORE writing extensive documentation.** This ensures your Skill solves real problems rather than documenting imagined ones.
 
