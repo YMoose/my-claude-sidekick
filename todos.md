@@ -41,6 +41,10 @@ nodes:
             links:
                 - "https://platform.claude.com/docs/en/build-with-claude/context-windows"
                 - "https://mp.weixin.qq.com/s/C5w6sD4VGJjZ_xrW7vvjRA"
+    - "package-snapshot skill":
+        state: pending
+        create_time: 2026-03-01
+        description: "A skill to package all .claude config (skills and agents)"
 relations:
     - ["copy some agents from x", "optimize orchestration-lead agent"]
     - ["optimize orchestration-lead agent", "add a plan skill"]
@@ -51,6 +55,7 @@ relations:
     - ["skill explore-github", "技术方案调研专家agent"]
     - ["技术方案调研专家agent", "技术文章审稿专家agent"]
     - ["optimize-skill skill", "learning context Engineering (Prompt Engineering)"]
+    - ["develop-skill skill", "package-snapshot skill"]
 ```
 
 ```mermaid
@@ -64,6 +69,7 @@ flowchart TD
     20260225_6["技术方案调研专家agent"]
     20260225_7["技术文章审稿专家agent"]
     20260226_8["learning context Engineering (Prompt Engineering)"]
+    20260301_9["package-snapshot skill"]
 
     20260225_0 --> 20260225_1
     20260225_1 --> 20260225_2
@@ -74,4 +80,5 @@ flowchart TD
     20260225_5 --> 20260225_6
     20260225_6 --> 20260225_7
     20260225_3 --> 20260226_8
+    20260225_3 --> 20260301_9
 ```
