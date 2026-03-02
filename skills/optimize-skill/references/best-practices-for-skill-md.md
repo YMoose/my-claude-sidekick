@@ -2,6 +2,29 @@
 
 Good effective Skills are concise, well-structured, and tested with real usage. so they can be discovered and used successfully
 
+## Checklist for effective Skills
+
+### Naming
+### Description
+- [ ] Description is specific and includes key terms
+- [ ] Description includes both what the Skill does and when to use it
+- [ ] Description is clear and includes trigger conditions
+### Workflow
+- [ ] Workflows have clear steps
+- [ ] Instructions are specific and actionable
+- [ ] Validation/verification steps for critical operations
+- [ ] Feedback loops included for quality-critical tasks
+### Reference
+- [ ] Additional details are in separate files (if needed)
+- [ ] Proper organization: details in references/, scripts in scripts/, examples in examples/
+
+### Core quality
+- [ ] Skill has a single, clear purpose
+- [ ] SKILL.md body is under 500 lines
+- [ ] Uses examples where helpful
+- [ ] Examples are concrete, not abstract
+- [ ] Error handling is documented
+
 ## YAML Frontmatter
 
 The SKILL.md frontmatter requires two fields:
@@ -404,79 +427,3 @@ Here's the actual information...
 **API reference**: See [reference.md](reference.md)
 **Examples**: See [examples.md](examples.md)
 ```
-
-## Common Optimizations
-
-### 1. Split Large Skills
-If SKILL.md exceeds 150 lines, consider:
-- Moving detailed criteria to `references/criteria.md`
-- Moving examples to `examples/` directory
-- Moving step-by-step guides to `references/guide.md`
-
-### 2. Improve Triggers
-Enhance description with trigger phrases:
-```yaml
-description: Short description. Use when users ask to (1) action one, (2) action two, or (3) action three. Triggered by phrases like "keyword", "another keyword".
-```
-
-### 3. Clarify Workflow
-Make steps more specific:
-```markdown
-## Workflow
-
-1. **Step name** - Specific action with tool reference
-2. **Next step** - Clear condition or action
-```
-
-## Checklist for effective Skills
-
-Before sharing a Skill, verify:
-
-### Core quality
-- [ ] Description is specific and includes key terms
-- [ ] Description includes both what the Skill does and when to use it
-- [ ] SKILL.md body is under 500 lines
-- [ ] Additional details are in separate files (if needed)
-- [ ] No time-sensitive information (or in "old patterns" section)
-- [ ] Consistent terminology throughout
-- [ ] Examples are concrete, not abstract
-- [ ] File references are one level deep
-- [ ] Progressive disclosure used appropriately
-- [ ] Workflows have clear steps
-
-### Code and scripts
-- [ ] Scripts solve problems rather than punt to Claude
-- [ ] Error handling is explicit and helpful
-- [ ] No "voodoo constants" (all values justified)
-- [ ] Required packages listed in instructions and verified as available
-- [ ] Scripts have clear documentation
-- [ ] No Windows-style paths (all forward slashes)
-- [ ] Validation/verification steps for critical operations
-- [ ] Feedback loops included for quality-critical tasks
-
-## Analysis Checklist
-
-When analyzing a skill, check for:
-
-### Structure
-- [ ] Has proper frontmatter (name, description)
-- [ ] Description is clear and includes trigger conditions
-- [ ] Logical flow from overview to details
-- [ ] Sections are well-organized
-
-### Content Quality
-- [ ] Instructions are specific and actionable
-- [ ] Avoids redundancy and repetition
-- [ ] Uses examples where helpful
-- [ ] Links to references instead of embedding long content
-
-### Best Practices
-- [ ] Skill has a single, clear purpose
-- [ ] Workflow steps are sequential and complete
-- [ ] Error handling is documented
-- [ ] Tips section provides practical guidance
-
-### Maintainability
-- [ ] Complex details moved to references/
-- [ ] Scripts are in scripts/ directory
-- [ ] Examples are in examples/ directory

@@ -1,6 +1,15 @@
 # Tools in skills
 
-The sections below focus on Skills that include executable scripts. If your Skill uses only markdown instructions, skip to [Checklist for effective Skills](#checklist-for-effective-skills).
+Some skills include executable scripts.
+
+## checklists
+
+- [ ] Scripts solve problems rather than punt to Claude
+- [ ] Error handling is explicit and helpful
+- [ ] No "voodoo constants" (all values justified)
+- [ ] Required packages listed in instructions and verified as available
+- [ ] Scripts have clear documentation
+- [ ] No Windows-style paths (all forward slashes '/')
 
 ## scripts
 
