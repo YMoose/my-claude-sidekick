@@ -68,7 +68,7 @@ flowchart TD
     20260225_5["skill explore-github"]
     20260225_6["技术方案调研专家agent"]
     20260225_7["技术文章审稿专家agent"]
-    20260226_8["learning context Engineering (Prompt Engineering)"]
+    20260226_8["learning context Engineering & Prompt Engineering"]
     20260301_9["package-snapshot skill"]
 
     20260225_0 --> 20260225_1
