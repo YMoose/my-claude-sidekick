@@ -85,11 +85,18 @@ def generate_node_id(index: int, create_time: str = None) -> str:
 
 
 def generate_mermaid(nodes: List[Dict], relations: List[Tuple[str, str]]) -> str:
-    """Generate mermaid flowchart from nodes and relations."""
+    """Generate mermaid flowchart from nodes and relations.
+
+    Filters out completed nodes (state: done) and their relations.
+    """
     lines = ["flowchart TD"]
 
+    # Filter out completed nodes (state: done)
+    active_nodes = [n for n in nodes if n.get("state", "").lower() != "done"]
+
+    # Build name_to_id mapping only for active nodes
     name_to_id = {}
-    for i, node in enumerate(nodes):
+    for i, node in enumerate(active_nodes):
         create_time = node.get("create_time")
         node_id = generate_node_id(i, create_time)
         name = node.get("name", node.get("task", ""))
@@ -99,10 +106,12 @@ def generate_mermaid(nodes: List[Dict], relations: List[Tuple[str, str]]) -> str
 
     lines.append("")
 
+    # Filter relations to only include those between active nodes
+    active_names = set(name_to_id.keys())
     for from_task, to_task in relations:
-        from_id = name_to_id.get(from_task)
-        to_id = name_to_id.get(to_task)
-        if from_id and to_id:
+        if from_task in active_names and to_task in active_names:
+            from_id = name_to_id[from_task]
+            to_id = name_to_id[to_task]
             lines.append(f'    {from_id} --> {to_id}')
 
     return "\n".join(lines)

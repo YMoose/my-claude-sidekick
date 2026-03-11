@@ -1,6 +1,6 @@
 ---
 name: add-todo
-description: Add new todo items to task tracking files (todos.md) with dependency tracking. Use when the user wants to add a new task, track dependencies between tasks, or update their task tracking file. Triggered by phrases like "add a todo", "new task", "track this task", or when working with todos.md files.
+description: Add new todo items to task tracking files (todos.md) with dependency tracking. Use when the user wants to add a new task, track dependencies between tasks, or update their task tracking file. Triggered by phrases like "add a todo", "new task", "track this task", or when working with todos.md files. Also triggers when marking tasks as done - completed tasks are automatically removed from the mermaid graph.
 ---
 
 # Add Todo
@@ -14,6 +14,8 @@ Add new tasks to task tracking file with YAML/JSON structure and optional mermai
 3. **Identify dependencies**: Check if task depends on or blocks existing tasks (ask if unclear)
 4. **Update data**: Add task to YAML/JSON section using Edit tool
 5. **Update flowchart(optional)**: If mermaid exists, run generate_mermaid.py and update
+   - Note: Tasks with `state: done` are automatically excluded from the mermaid graph
+   - Relations involving completed tasks are also excluded
 6. **Confirm**: Verify update with user
 
 ## File Format
@@ -49,6 +51,8 @@ Generate mermaid from YAML/JSON string:
 python scripts/generate_mermaid.py '<yaml_or_json_string>'
 ```
 
+**Note**: Tasks with `state: done` are automatically filtered out from the generated mermaid diagram.
+
 Example with YAML:
 ```bash
 python scripts/generate_mermaid.py 'nodes:
@@ -58,6 +62,12 @@ python scripts/generate_mermaid.py 'nodes:
         state: pending
 relations:
     - ["task A", "task B"]'
+```
+
+Output (task A excluded because state is done):
+```mermaid
+flowchart TD
+    id0["task B"]
 ```
 
 Example with JSON:
