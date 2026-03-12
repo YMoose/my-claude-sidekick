@@ -51,6 +51,10 @@ nodes:
         state: pending
         create_time: 2026-03-11
         description: "Learn how to use the skill-creator plugin for skill development"
+    - "费曼学习法 agent or skill":
+        state: pending
+        create_time: 2026-03-12
+        description: "Create a Feynman learning method agent/skill for teaching and learning concepts"
 relations:
     - ["copy some agents from x", "optimize orchestration-lead agent"]
     - ["optimize orchestration-lead agent", "add a plan skill"]
@@ -64,6 +68,7 @@ relations:
     - ["develop-skill skill", "package-snapshot skill"]
     - ["learn skill-creator plugin", "skill explore-github"]
     - ["learn skill-creator plugin", "package-snapshot skill"]
+    - ["费曼学习法 agent or skill", "技术方案调研专家 agent"]
 ```
 
 ```mermaid
@@ -77,12 +82,14 @@ flowchart TD
     20260226_6["learning context Engineering & Prompt Engineering"]
     20260301_7["package-snapshot skill"]
     20260311_8["learn skill-creator plugin"]
+    20260312_9["费曼学习法 agent or skill"]
 
     20260225_0 --> 20260225_1
     20260225_1 --> 20260225_2
     20260225_4 --> 20260225_1
     20260225_3 --> 20260225_4
     20260225_4 --> 20260225_5
+    20260312_9 --> 20260225_4
     20260311_8 --> 20260225_3
     20260311_8 --> 20260301_7
 ```
