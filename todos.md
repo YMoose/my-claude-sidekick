@@ -44,9 +44,10 @@ nodes:
                 - "https://platform.claude.com/docs/en/build-with-claude/context-windows"
                 - "https://mp.weixin.qq.com/s/C5w6sD4VGJjZ_xrW7vvjRA"
     - "package-snapshot skill":
-        state: pending
+        state: done
         create_time: 2026-03-01
         description: "A skill to package all .claude config (skills and agents)"
+        remark: "replace it with claude plugin"
     - "learn skill-creator plugin":
         state: pending
         create_time: 2026-03-11
@@ -55,6 +56,7 @@ nodes:
         state: pending
         create_time: 2026-03-12
         description: "Create a Feynman learning method agent/skill for teaching and learning concepts"
+                
 relations:
     - ["copy some agents from x", "optimize orchestration-lead agent"]
     - ["optimize orchestration-lead agent", "add a plan skill"]
@@ -80,16 +82,14 @@ flowchart TD
     20260225_4["技术方案调研专家 agent"]
     20260225_5["技术文章审稿专家 agent"]
     20260226_6["learning context Engineering & Prompt Engineering"]
-    20260301_7["package-snapshot skill"]
-    20260311_8["learn skill-creator plugin"]
-    20260312_9["费曼学习法 agent or skill"]
+    20260311_7["learn skill-creator plugin"]
+    20260312_8["费曼学习法 agent or skill"]
 
     20260225_0 --> 20260225_1
     20260225_1 --> 20260225_2
     20260225_4 --> 20260225_1
     20260225_3 --> 20260225_4
     20260225_4 --> 20260225_5
-    20260312_9 --> 20260225_4
-    20260311_8 --> 20260225_3
-    20260311_8 --> 20260301_7
+    20260311_7 --> 20260225_3
+    20260312_8 --> 20260225_4
 ```
