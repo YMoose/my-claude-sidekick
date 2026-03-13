@@ -7,6 +7,7 @@
   "plugins": [
     {
         "name": "general-skills",
+        "source": "./general-skills",
         "description": "Some general skills",
         "skills": [
             "./skills/add-todo",
@@ -18,7 +19,7 @@
     {
       "name": "feynman-tech",
       "source": "./feynman-tech",
-      "description": "Manage a todo file"
+      "description": "Learn By Feynman Technique"
     }
   ]
 }
