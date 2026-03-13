@@ -1,9 +1,24 @@
 {
   "name": "my-claude-sidekick",
+  "version": "0.0.1",
   "owner": {
     "name": "moose.ye"
   },
   "plugins": [
-
+    {
+        "name": "general-skills",
+        "description": "Some general skills",
+        "skills": [
+            "./skills/add-todo",
+            "./skills/explore-github",
+            "./skills/literature-mine",
+            "./skills/optimize-claude-md"
+      ]
+    },
+    {
+      "name": "feynman-tech",
+      "source": "./feynman-tech",
+      "description": "Manage a todo file"
+    }
   ]
 }
