@@ -1,0 +1,8 @@
+{
+  "name": "coach-feynman",
+  "description": "A stepwise Feynman-Technique plugin",
+  "author": {
+    "name": "moose.ye"
+  },
+  "license": "MIT"
+}

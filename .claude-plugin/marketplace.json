@@ -1,25 +1,25 @@
 {
-  "name": "my-claude-sidekick",
-  "version": "0.0.1",
-  "owner": {
-    "name": "moose.ye"
-  },
-  "plugins": [
-    {
-        "name": "general-skills",
-        "source": "./general-skills",
-        "description": "Some general skills",
-        "skills": [
-            "./skills/add-todo",
-            "./skills/explore-github",
-            "./skills/literature-mine",
-            "./skills/optimize-claude-md"
-      ]
-    },
-    {
-      "name": "feynman-tech",
-      "source": "./feynman-tech",
-      "description": "Learn By Feynman Technique"
-    }
-  ]
+    "name":  "my-claude-sidekick",
+    "version":  "0.0.1",
+    "owner":  {
+                  "name":  "moose.ye"
+              },
+    "plugins":  [
+                    {
+                        "name":  "general-skills",
+                        "source":  "./general-skills",
+                        "description":  "Some general skills",
+                        "skills":  [
+                                       "./skills/add-todo",
+                                       "./skills/explore-github",
+                                       "./skills/literature-mine",
+                                       "./skills/optimize-claude-md"
+                                   ]
+                    },
+                    {
+                        "name":  "coach-feynman",
+                        "source":  "./coach-feynman",
+                        "description":  "A stepwise Feynman-Technique plugin."
+                    }
+                ]
 }

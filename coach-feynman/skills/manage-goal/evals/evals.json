@@ -1,0 +1,11 @@
+{
+  "skill_name": "manage-goal",
+  "evals": [
+    {
+      "id": 1,
+      "name": "learn-skill-creator-rationale",
+      "prompt": "I want to learn the rationale behind the skill-creator skill. I'm a developer who uses Claude Code daily and I'm curious about why the skill system was designed the way it is. I have about 5-8 hours per week to dedicate to this learning project. Help me create a goal record for this.",
+      "expected_output": "A timestamped goal-record file with four sections (Overall Goal, Current Level Baseline, Learning Habits and Unit Capacity, Staged Task List) and an entry in revise-note.md. The scope should be appropriately sized for 5-8 hours/week of learning."
+    }
+  ]
+}
