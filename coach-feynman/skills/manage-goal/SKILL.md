@@ -111,7 +111,7 @@ Use this skill to define the overall learning direction, estimate what one round
 - Combine the clearer goal definition, the current-level baseline, and the unit learning capacity estimate.
 - Use the current level as the starting point and the clearer goal as the direction.
 - Split the path into stage-sized learning tasks with milestones.
-- Use [references/scope-checklist.md](references/scope-checklist.md) when the user needs help checking scope or splitting stages.
+- Use [Raw Goal Prompts](#raw-goal-prompts) when checking scope, [Unit Learning Capacity Checks](#unit-learning-capacity-checks) when sizing one learning round, and [Stage-Splitting Questions](#stage-splitting-questions) when splitting candidate stages.
 
 #### Why
 
@@ -192,10 +192,6 @@ Use the bundled templates for the exact file structure:
 - Do not merge revision history back into the main goal-record file.
 - Prefer one strong subgoal over an impressive but unusable plan.
 
-## Resources
-
-- Use [references/scope-checklist.md](references/scope-checklist.md) when checking scope, estimating unit learning capacity, or splitting candidate stages.
-
 ## Example Interaction
 
 **User:** I want to learn about skill-creator rationale.
@@ -224,4 +220,48 @@ Use the bundled templates for the exact file structure:
 
 **You:** (Write files, then verify)
 "Done! I've created `goal-record-20260315-1430.md` and updated `revise-note.md`. Your first stage is to read the skill-creator SKILL.md file and related docs."
+
+## Scope Checklist
+
+Use this checklist to turn a broad topic into a stage-sized learning plan for goal management.
+Use it for questioning and judgment, not for defining the output file structure.
+
+### Raw Goal Prompts
+
+- What do you ultimately want to understand, explain, solve, or teach?
+- What outcome matters most right now?
+- Which part of the topic matters now, and which parts can wait?
+
+### Current-Level Prompts
+
+- What can you already explain without notes?
+- Which parts do you only recognize by name?
+- Which parts still feel fuzzy, memorized, or fragile?
+- Where are you most likely to overestimate your understanding?
+
+### Unit Learning Capacity Checks
+
+- How much focused time can one round realistically use?
+- How much source material can you study without crowding out outlining and rehearsal?
+- How many core concepts or open questions can one round hold before it becomes too large?
+- At what point does your attention or energy usually drop?
+
+Keep in mind that one unit should include enough room for source gathering and study, outline drafting, explanation rehearsal, and audience questioning, not just raw reading or watching.
+
+### Stage-Splitting Questions
+
+- What can reasonably fit into one full learning loop?
+- What is the smallest useful current stage?
+- Which nearby subtopics are useful but not required yet?
+- What prerequisite must be understood first?
+- What would make the current stage obviously too large?
+- Where should the first milestone sit?
+
+### Revision Questions
+
+- Which parts of the existing goal record still look valid?
+- Which parts changed enough to justify a new snapshot?
+- Did the current stage prove too large or too small?
+- Did later study or rehearsal expose a hidden prerequisite?
+- Has the user's current-level baseline changed enough to update the plan?
 

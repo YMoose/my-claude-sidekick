@@ -58,6 +58,10 @@
       "name": "revise-delete-stages",
       "prompt": "I have an existing goal record with multiple stages. After reviewing it, I realize the last stage is not aligned with my actual goal - it's about applying what I learn, but I just want to understand the topic, not necessarily apply it. Can you help me revise my goal record to delete the last stage?",
       "expected_output": "A modified goal-record file (or new timestamped version based on user choice) with the last stage removed. Plus a revise-note.md entry explaining what was deleted and why.",
+      "files": [
+        "./files/goal-record-20260315-1430.md",
+        "./files/revise-note.md"
+      ],
       "assertions": [
         {
           "name": "asks-new-or-modify-file",
