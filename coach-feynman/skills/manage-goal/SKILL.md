@@ -15,6 +15,16 @@ Use this skill to define the overall learning direction, estimate what one round
 - Treat one unit of learning as something the user can carry through a full loop of source gathering and study, outline drafting, explanation rehearsal, and audience questioning without obvious overload.
 - Manage the goal outputs as two files: one timestamped goal record that stores the current snapshot, and one separate `revise-note.md` file that records what changed between snapshots.
 
+## Interaction Style
+
+- **Ask questions one at a time**, not all at once. After each answer, pause and either ask the next question or summarize what you learned before proceeding.
+- Use interactive questioning especially during:
+  - Goal clarification (Step 1)
+  - Current level description (Step 2)
+  - Learning capacity estimation (Step 3)
+- If the user seems to prefer speed over dialogue, you can batch questions—but default to one question at a time.
+- After gathering information, **explicitly confirm** you have enough before moving to the next step.
+
 ## Workflow
 
 ```text
@@ -24,7 +34,10 @@ Use this skill to define the overall learning direction, estimate what one round
 - [ ] 3. Estimate unit learning capacity
 - [ ] 4. Split a staged task list
 - [ ] 5. Write a new timestamped goal record and update the revise note
+- [ ] 6. Verify output files exist before finishing
 ```
+
+**Important:** Do not end the session without completing Step 5 (writing files). If you've gone through all the clarification steps but haven't created the output files yet, you must create them before finishing.
 
 ### Step 1 Clarify the raw learning goal
 
@@ -115,7 +128,11 @@ Use this skill to define the overall learning direction, estimate what one round
 #### How
 
 - Summarize the overall goal, current level, learning habits, unit learning capacity, and current staged task list.
-- Create a new timestamped goal-record file instead of overwriting the previous snapshot.
+- **Before writing files, ask the user:**
+  - "Should I create a new timestamped goal-record file (recommended for new goals or significant changes), or modify the existing one?"
+  - If modifying: "Which sections are changing?"
+- **If creating new:** Create a new timestamped goal-record file (e.g., `goal-record-20260315-1430.md`).
+- **If modifying existing:** Update the existing goal-record file and still append to `revise-note.md` describing what changed.
 - Append a concise entry to `revise-note.md` describing what changed and why.
 - State the next phase as source collection and study for the current stage, not full explanation yet.
 
@@ -124,10 +141,12 @@ Use this skill to define the overall learning direction, estimate what one round
 - These goal records should remain reusable later.
 - Later work may reveal that the goal, baseline, or stage sizing should be revised.
 - Versioned snapshots make it easier to inspect how the plan changed over time without losing the previous state.
+- **However, for minor tweaks, modifying the existing file may be preferable to avoid file clutter.**
+- Asking the user ensures the file management matches their preference.
 
 #### Output
 
-- A new timestamped goal record file.
+- Either a new timestamped goal record file OR an updated existing one.
 - An updated `revise-note.md` file.
 
 ## Record Policy
@@ -176,3 +195,32 @@ Use the bundled templates for the exact file structure:
 ## Resources
 
 - Use [references/scope-checklist.md](references/scope-checklist.md) when checking scope, estimating unit learning capacity, or splitting candidate stages.
+
+## Example Interaction
+
+**User:** I want to learn about skill-creator rationale.
+
+**You:** (Step 1 - Goal clarification, ask one at a time)
+"What specifically about the skill-creator rationale do you want to understand? For example: why it uses versioned records, how the evaluation loop works, or the thinking behind the stage-splitting approach?"
+
+**User:** I want to understand why it uses versioned records and the evaluation loop.
+
+**You:** (Step 2 - Current level, one question)
+"Got it. Before we dive in, what's your current experience with the skill system? Have you used or modified any skills before, or is this your first deep dive?"
+
+**User:** I've used skills but never modified one.
+
+**You:** (Step 3 - Learning capacity, one question)
+"Thanks, that helps. How much time can you dedicate to this learning project per week, and do you prefer short frequent sessions or longer deep-dive sessions?"
+
+... (after gathering all information)
+
+**You:** (Before writing files)
+"I have enough to create your goal record. Should I:
+1. Create a new timestamped file (recommended for new goals), or
+2. Modify an existing goal-record file if you have one?"
+
+**User:** Create a new one.
+
+**You:** (Write files, then verify)
+"Done! I've created `goal-record-20260315-1430.md` and updated `revise-note.md`. Your first stage is to read the skill-creator SKILL.md file and related docs."

@@ -5,7 +5,99 @@
       "id": 1,
       "name": "learn-skill-creator-rationale",
       "prompt": "I want to learn the rationale behind the skill-creator skill. I'm a developer who uses Claude Code daily and I'm curious about why the skill system was designed the way it is. I have about 5-8 hours per week to dedicate to this learning project. Help me create a goal record for this.",
-      "expected_output": "A timestamped goal-record file with four sections (Overall Goal, Current Level Baseline, Learning Habits and Unit Capacity, Staged Task List) and an entry in revise-note.md. The scope should be appropriately sized for 5-8 hours/week of learning."
+      "expected_output": "A timestamped goal-record file with four sections (Overall Goal, Current Level Baseline, Learning Habits and Unit Capacity, Staged Task List) and an entry in revise-note.md. The scope should be appropriately sized for 5-8 hours/week of learning.",
+      "assertions": [
+        {
+          "name": "has-four-required-sections",
+          "type": "regex",
+          "description": "Goal record must have all four required sections",
+          "pattern": "## [1-4]\\. ",
+          "min_matches": 4
+        },
+        {
+          "name": "has-timestamped-filename",
+          "type": "file_exists",
+          "description": "Output file must follow naming convention goal-record-YYYYMMDD-HHMM.md",
+          "pattern": "goal-record-\\d{8}-\\d{4}\\.md"
+        },
+        {
+          "name": "has-revise-note-file",
+          "type": "file_exists",
+          "description": "Must create revise-note.md file",
+          "filename": "revise-note.md"
+        },
+        {
+          "name": "asks-questions-one-at-a-time",
+          "type": "conversation_pattern",
+          "description": "Skill should ask questions one at a time during clarification, not dump all questions at once",
+          "pattern": "single_question_per_turn",
+          "during_steps": [1, 2, 3]
+        },
+        {
+          "name": "asks-file-preference-before-writing",
+          "type": "conversation_content",
+          "description": "Before writing files, skill must ask whether to create new file or modify existing",
+          "must_contain": "create a new timestamped goal-record file"
+        },
+        {
+          "name": "confirms-information-before-proceeding",
+          "type": "conversation_pattern",
+          "description": "After gathering information, skill should confirm it has enough before moving to next step",
+          "pattern": "explicit_confirmation"
+        },
+        {
+          "name": "files-created-before-session-end",
+          "type": "output_verification",
+          "description": "Both goal-record and revise-note files must exist at end of session",
+          "required_files": ["goal-record-*.md", "revise-note.md"]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "revise-delete-stages",
+      "prompt": "I have an existing goal record with multiple stages. After reviewing it, I realize the last stage is not aligned with my actual goal - it's about applying what I learn, but I just want to understand the topic, not necessarily apply it. Can you help me revise my goal record to delete the last stage?",
+      "expected_output": "A modified goal-record file (or new timestamped version based on user choice) with the last stage removed. Plus a revise-note.md entry explaining what was deleted and why.",
+      "assertions": [
+        {
+          "name": "asks-new-or-modify-file",
+          "type": "conversation_content",
+          "description": "Skill must ask whether to create new file or modify existing one before writing",
+          "must_contain": ["new timestamped", "modify", "existing"]
+        },
+        {
+          "name": "reads-existing-goal-record",
+          "type": "conversation_content",
+          "description": "Skill should read the existing goal-record file first to understand current structure",
+          "must_contain": "read the latest goal-record"
+        },
+        {
+          "name": "revise-note-explains-deletion-why",
+          "type": "contains",
+          "description": "Revise note should explain why the stages were deleted",
+          "file": "revise-note.md",
+          "text": "why"
+        },
+        {
+          "name": "revise-note-lists-deleted-stages",
+          "type": "contains",
+          "description": "Revise note should list which stages were removed",
+          "file": "revise-note.md",
+          "text": "Stage"
+        },
+        {
+          "name": "has-fewer-stages",
+          "type": "regex",
+          "description": "Updated goal should have one fewer stage than the original",
+          "pattern": "Stage"
+        },
+        {
+          "name": "files-created-before-session-end",
+          "type": "output_verification",
+          "description": "Both goal-record and revise-note files must exist at end of session",
+          "required_files": ["goal-record-*.md", "revise-note.md"]
+        }
+      ]
     }
   ]
 }
