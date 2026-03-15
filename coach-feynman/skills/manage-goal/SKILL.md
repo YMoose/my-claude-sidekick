@@ -1,6 +1,6 @@
 ---
 name: manage-goal
-description: Manage versioned learning goal records by clarifying the raw goal, describing the user's current level, estimating the user's unit learning capacity, and splitting the overall goal into stage-sized tasks. Use when users want to create or revise a timestamped goal record plus a separate revise-note file for the current learning cycle.
+description: Manage versioned learning goal records by clarifying the raw goal, describing the user's current level, estimating the user's unit learning capacity, and splitting the overall goal into stage-sized tasks. Use when users want to create or revise a timestamped goal record plus a separate revise-note file for a specific learning project or topic.
 ---
 
 # Manage Learning Goal
@@ -134,7 +134,7 @@ Use this skill to define the overall learning direction, estimate what one round
 - **If creating new:** Create a new timestamped goal-record file (e.g., `goal-record-20260315-1430.md`).
 - **If modifying existing:** Update the existing goal-record file and still append to `revise-note.md` describing what changed.
 - Append a concise entry to `revise-note.md` describing what changed and why.
-- State the next phase as source collection and study for the current stage, not full explanation yet.
+- State the next practical action clearly, such as focused study for the selected task, drafting an explanation framework, or revising the task split. Do not jump straight to full teaching if the foundation is not ready.
 
 #### Why
 
@@ -224,3 +224,4 @@ Use the bundled templates for the exact file structure:
 
 **You:** (Write files, then verify)
 "Done! I've created `goal-record-20260315-1430.md` and updated `revise-note.md`. Your first stage is to read the skill-creator SKILL.md file and related docs."
+
