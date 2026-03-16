@@ -102,6 +102,69 @@
           "required_files": ["goal-record-*.md", "revise-note.md"]
         }
       ]
+    },
+    {
+      "id": 3,
+      "name": "revise-unit-capacity",
+      "prompt": "I've reviewed the material, and I think for this round, finishing the content before the 'Improving the skill' section is enough. Can you help me adjust my plan?",
+      "expected_output": "A modified goal-record file (or new timestamped version based on user choice). The skill should infer that wanting to cover less content indicates the user's unit capacity is smaller than originally estimated. The appropriate response is to restructure the staged task list to focus on the retained scope, potentially splitting larger stages into smaller ones. Section 3 (Learning Habits and Unit Capacity) may be updated, and Section 4 (Staged Task List) should be adjusted. Plus a revise-note.md entry at the top explaining what changed and why.",
+      "files": [
+        "./files/goal-record-20260315-1430.md",
+        "./files/revise-note.md"
+      ],
+      "assertions": [
+        {
+          "name": "asks-new-or-modify-file",
+          "type": "conversation_content",
+          "description": "Skill must ask whether to create new file or modify existing one before writing",
+          "must_contain": ["new timestamped", "modify", "existing"]
+        },
+        {
+          "name": "reads-existing-goal-record",
+          "type": "conversation_content",
+          "description": "Skill should read the existing goal-record file first to understand current structure",
+          "must_contain": "read the latest goal-record"
+        },
+        {
+          "name": "presents-modification-plan",
+          "type": "conversation_content",
+          "description": "Skill should present a modification plan showing which sections will change and which will be preserved, then wait for user confirmation",
+          "must_contain": ["proposed change", "Sections to update", "Sections to preserve"]
+        },
+        {
+          "name": "infers-capacity-from-scope-reduction",
+          "type": "conversation_content",
+          "description": "Skill should infer that reduced scope indicates smaller unit capacity than assumed",
+          "must_contain": ["capacity", "scope"]
+        },
+        {
+          "name": "revise-note-at-top",
+          "type": "contains",
+          "description": "The new revise-note entry should be at the top of the file (newest first)",
+          "file": "revise-note.md",
+          "text": "## goal-record"
+        },
+        {
+          "name": "revise-note-explains-why",
+          "type": "contains",
+          "description": "Revise note should explain why the change was made",
+          "file": "revise-note.md",
+          "text": "why"
+        },
+        {
+          "name": "stages-restructured",
+          "type": "contains",
+          "description": "Staged Task List should be restructured to match the narrowed scope",
+          "file": "goal-record-*.md",
+          "text": "Stage"
+        },
+        {
+          "name": "files-created-before-session-end",
+          "type": "output_verification",
+          "description": "Both goal-record and revise-note files must exist at end of session",
+          "required_files": ["goal-record-*.md", "revise-note.md"]
+        }
+      ]
     }
   ]
 }

@@ -22,7 +22,7 @@ Use this skill to define the overall learning direction, estimate what one round
   - Goal clarification (Step 1)
   - Current level description (Step 2)
   - Learning capacity estimation (Step 3)
-- If the user seems to prefer speed over dialogue, you can batch questions—but default to one question at a time.
+- If the user seems to prefer speed over dialogue, you can batch questions, but default to one question at a time.
 - After gathering information, **explicitly confirm** you have enough before moving to the next step.
 
 ## Workflow
@@ -128,12 +128,18 @@ Use this skill to define the overall learning direction, estimate what one round
 #### How
 
 - Summarize the overall goal, current level, learning habits, unit learning capacity, and current staged task list.
+- **If the user is revising an existing plan, diagnose the revision before editing anything:**
+  - infer which section or sections are **directly affected**
+  - infer which section or sections are **dependent** and may need adjustment to stay consistent
+  - say why you think those sections are implicated
+  - ask the user to confirm or correct that scope before making changes
+  - use the exact section titles when confirming, for example: "This sounds like a change to `## 3. Learning Habits and Unit Capacity`, and likely also `## 4. Staged Task List` because the task size should shrink with the shorter focus span. Should I update those two sections only?"
 - **Before writing files, ask the user:**
   - "Should I create a new timestamped goal-record file (recommended for new goals or significant changes), or modify the existing one?"
-  - If modifying: "Which sections are changing?"
-- **If creating new:** Create a new timestamped goal-record file (e.g., `goal-record-20260315-1430.md`).
-- **If modifying existing:** Update the existing goal-record file and still append to `revise-note.md` describing what changed.
-- Append a concise entry to `revise-note.md` describing what changed and why.
+- **If creating new:** Create a new timestamped goal-record file (e.g., `goal-record-20260315-1430.md`) and carry forward all still-valid sections unchanged.
+- **If modifying existing:** Update only the sections confirmed with user, plus any dependent sections the user also confirmed. Preserve the unchanged sections exactly as they were.
+- **Write the revise-note entry at the TOP of the file** - newest entries first, so the most recent change is immediately visible when opening the file. Include what changed, why, and the trigger.
+- Preserve any existing revise-note entries below the new one - do not delete revision history.
 - State the next practical action clearly, such as focused study for the selected task, drafting an explanation framework, or revising the task split. Do not jump straight to full teaching if the foundation is not ready.
 
 #### Why
@@ -143,30 +149,40 @@ Use this skill to define the overall learning direction, estimate what one round
 - Versioned snapshots make it easier to inspect how the plan changed over time without losing the previous state.
 - **However, for minor tweaks, modifying the existing file may be preferable to avoid file clutter.**
 - Asking the user ensures the file management matches their preference.
+- Diagnosing the revision first helps avoid accidental full-file rewrites when the user only intended a local adjustment.
+- Explicitly naming dependent sections keeps the record internally consistent instead of silently leaving contradictions behind.
+- **Placing newest entries at the top of revise-note.md follows the convention of putting current/active information first** - users opening the file want to see the latest change immediately.
 
 #### Output
 
 - Either a new timestamped goal record file OR an updated existing one.
-- An updated `revise-note.md` file.
+- An updated `revise-note.md` file with the new entry at the top.
 
 ## Record Policy
 
-Maintain the records as versioned snapshots rather than as one overwritten file.
+Maintain the records as versioned snapshots by default, while still allowing narrow in-place edits when the user explicitly prefers that.
 
 Rules:
 
 - each new goal-record file is a full current snapshot, not a partial patch
 - each goal-record snapshot keeps the same four stable sections
 - `revise-note.md` stays separate from the goal-record snapshots
-- each new snapshot should have one matching revise-note entry
+- each meaningful revision should have one matching revise-note entry
+- small in-place edits are allowed only when the user explicitly chooses that path
 
 When revising the records:
 
 - read the latest goal-record file first
 - read `revise-note.md` if it already exists
-- preserve still-valid content by carrying it into the new snapshot
-- create a new timestamped goal-record file instead of overwriting the old one
-- append one concise revision entry to `revise-note.md`
+- diagnose the user's request before editing:
+  - infer the directly affected sections
+  - infer any dependent sections that may also need revision
+  - explain that inference briefly in plain language
+- confirm with user which sections should actually be updated
+- if the user wants a new snapshot, preserve still-valid content by carrying it into the new timestamped file
+- if the user wants an in-place edit, preserve all unconfirmed sections exactly as they were
+- update dependent sections only when the confirmed change logically propagates into them
+- write the new revision entry at the **top** of `revise-note.md`, with previous entries preserved below
 - avoid collapsing revision notes back into the goal-record file
 
 ## Output Format
@@ -265,3 +281,10 @@ Keep in mind that one unit should include enough room for source gathering and s
 - Did later study or rehearsal expose a hidden prerequisite?
 - Has the user's current-level baseline changed enough to update the plan?
 
+### Revision Diagnosis Hints
+
+- If the user changes the end target, desired outcome, or scope boundary, start with `## 1. Overall Goal` and then check whether `## 4. Staged Task List` also needs to change.
+- If the user corrects what they already know, or reveals a missing prerequisite, start with `## 2. Current Level Baseline` and then check `## 4. Staged Task List`.
+- If the user changes available time, focus span, study rhythm, or session size, start with `## 3. Learning Habits and Unit Capacity` and usually also check `## 4. Staged Task List`.
+- If the user says the current stage is too large, too small, or in the wrong order, start with `## 4. Staged Task List` and then check whether `## 3. Learning Habits and Unit Capacity` should also be revised.
+- If the user only wants clearer wording while the plan itself stays the same, keep the change local and do not widen the revision scope.
