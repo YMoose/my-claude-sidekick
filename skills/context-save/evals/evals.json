@@ -1,0 +1,72 @@
+{
+  "skill_name": "context-save",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "save my current session context to /tmp/session-backup",
+      "expected_output": "Uses the bundled save_context.py script to export the current session into /tmp/session-backup/<session-id>/, copies the transcript and companion session directory when present, reports the final path, and offers /clear as an optional follow-up.",
+      "files": [],
+      "expectations": [
+        "The bundled scripts/save_context.py script is used instead of manually copying files from ~/.claude/projects/",
+        "The output directory exists at /tmp/session-backup/<session-id>/",
+        "A JSONL transcript file is present in the output directory",
+        "The export consists of the original transcript and companion session files only",
+        "The user is offered /clear as an optional next step after a successful save"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "export this conversation to ~/backups/",
+      "expected_output": "Expands ~/backups to the user's home directory, creates <home>/backups/<session-id>/, exports the current session, reports the resolved export path, and offers /clear without implying that the context was already cleared.",
+      "files": [],
+      "expectations": [
+        "The destination path uses the user's home directory rather than creating a literal ~/backups folder in the current working directory",
+        "A subdirectory named after the session ID is created under the expanded home path",
+        "The assistant reports the exact export directory after the script succeeds",
+        "The export summary mentions whether the companion session directory was copied",
+        "The /clear suggestion is phrased as optional"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "before we clear the context, archive this chat to ./archives/current-session",
+      "expected_output": "Resolves the relative destination against the current working directory, exports the current session, preserves sub-agent and tool-result data when present, and then suggests /clear as a separate manual action.",
+      "files": [],
+      "expectations": [
+        "The relative destination is resolved from the current working directory",
+        "The copied transcript remains the source of cwd and transcript-path information",
+        "If the session directory exists, sub-agent and tool-result data are included in the export",
+        "The assistant does not auto-clear the context"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "export this session, then keep only the conversation starting from the command where we began the context-management research",
+      "expected_output": "Exports the session first, uses the bundled filter_context.py script to list anchor candidates from the saved copy, narrows the candidates to whole-block user-message anchors, asks for confirmation only if multiple likely matches remain, and then filters the exported copy with the chosen anchor UUID, using the current working directory as the default output root when no separate output root is given.",
+      "files": [],
+      "expectations": [
+        "The bundled scripts/filter_context.py script is used instead of manually editing the JSONL",
+        "Anchor selection is based on candidate user-message block starts, not arbitrary assistant or tool entries",
+        "The workflow keeps export and filtering as two separate steps on disk",
+        "If the anchor is ambiguous, the assistant surfaces a short candidate list with UUIDs",
+        "The assistant makes it clear that omitting -o defaults the filtered output to the current working directory",
+        "The assistant makes it clear that filtering may still replace the exported copy when the final target directory matches it"
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "I only want the part after this saved session's compact-summary message",
+      "expected_output": "Lists anchor candidates from the exported session, allows the compact-summary user message as a valid anchor, filters from that point onward, and explains that the nearest earlier file-history snapshot becomes the baseline for the filtered export.",
+      "files": [],
+      "expectations": [
+        "Compaction-summary user messages are treated as valid anchor candidates",
+        "tool_result user messages are not offered as anchor candidates",
+        "IDE context entries are not offered as anchor candidates",
+        "The filtered output uses the current working directory as the default output root when -o is omitted",
+        "Passing -o writes the filtered result under <output-dir>/<session-id>/",
+        "The filtered export preserves a rewritten baseline snapshot derived from the nearest pre-anchor snapshot",
+        "Later snapshots are kept only when they still belong to kept transcript messages"
+      ]
+    }
+  ]
+}
