@@ -1,0 +1,8 @@
+{
+  "name": "harness-engineer",
+  "version": "0.1.0",
+  "author": {
+    "name": "moose.ye"
+  },
+  "description": "Engineering harness plugin for creating, reviewing, and implementing ExecPlans and related workflows"
+}
