@@ -13,7 +13,8 @@
                 "./skills/add-todo",
                 "./skills/explore-github",
                 "./skills/literature-mine",
-                "./skills/optimize-claude-md"
+                "./skills/optimize-claude-md",
+                "./skills/context-save"
             ]
         },
         {

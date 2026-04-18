@@ -31,7 +31,7 @@ nodes:
         state: done
         create_time: 2026-02-25
     - "技术方案调研专家agent":
-        state: pending
+        state: done
         create_time: 2026-02-25
     - "技术文章审稿专家agent":
         state: pending
@@ -60,6 +60,9 @@ nodes:
         state: done
         create_time: 2026-04-03
         description: "Create a skill for context management"
+    - "learn plugin-dev plugin":
+        state: pending
+        create_time: 2026-04-18
 
 relations:
     - ["copy some agents from x", "optimize orchestration-lead agent"]
@@ -76,6 +79,8 @@ relations:
     - ["learn skill-creator plugin", "package-snapshot skill"]
     - ["费曼学习法 agent or skill", "技术方案调研专家 agent"]
     - ["skill context-manage", "skill explore-github"]
+    - ["learn plugin-dev plugin", "copy some agents from x"]
+    - ["learn plugin-dev plugin", "技术文章审稿专家agent"]
 ```
 
 ```mermaid
@@ -83,13 +88,13 @@ flowchart TD
     20260225_0["copy some agents from x"]
     20260225_1["optimize orchestration-lead agent"]
     20260225_2["agent-evolutionist agent"]
-    20260225_3["技术方案调研专家agent"]
-    20260225_4["技术文章审稿专家agent"]
-    20260226_5["learning context Engineering & Prompt Engineering"]
-    20260311_6["learn skill-creator plugin"]
+    20260225_3["技术文章审稿专家agent"]
+    20260226_4["learning context Engineering & Prompt Engineering"]
+    20260311_5["learn skill-creator plugin"]
+    20260418_6["learn plugin-dev plugin"]
 
     20260225_0 --> 20260225_1
     20260225_1 --> 20260225_2
-    20260225_3 --> 20260225_1
-    20260225_3 --> 20260225_4
+    20260418_6 --> 20260225_0
+    20260418_6 --> 20260225_3
 ```
