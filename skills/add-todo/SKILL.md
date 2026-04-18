@@ -13,9 +13,9 @@ Add new tasks to task tracking file with YAML/JSON structure and optional mermai
 2. **Understand task**: Clarify new task's purpose and scope
 3. **Identify dependencies**: Check if task depends on or blocks existing tasks (ask if unclear)
 4. **Update data**: Add task to YAML/JSON section using Edit tool
-5. **Update flowchart(optional)**: If mermaid exists, run generate_mermaid.py and update
-   - Note: Tasks with `state: done` are automatically excluded from the mermaid graph
-   - Relations involving completed tasks are also excluded
+5. **Update flowchart and relations(optional)**: If mermaid exists, run generate_mermaid.py and update both the mermaid diagram **and** the relations section in YAML.
+   - The script outputs mermaid first, then `---FILTERED_RELATIONS---` followed by the filtered relations YAML.
+   - Replace the YAML `relations:` section with the filtered output so relations and mermaid edges stay in sync.
 6. **Confirm**: Verify update with user
 
 ## File Format
@@ -51,7 +51,11 @@ Generate mermaid from YAML/JSON string:
 python scripts/generate_mermaid.py '<yaml_or_json_string>'
 ```
 
-**Note**: Tasks with `state: done` are automatically filtered out from the generated mermaid diagram.
+**Note**: The script outputs two sections separated by `---FILTERED_RELATIONS---`:
+1. Mermaid flowchart (done nodes excluded)
+2. Filtered relations YAML (only relations between active nodes)
+
+Use both outputs to update the tracking file — replace the mermaid block **and** the relations section so they stay consistent.
 
 Example with YAML:
 ```bash
@@ -64,11 +68,15 @@ relations:
     - ["task A", "task B"]'
 ```
 
-Output (task A excluded because state is done):
-```mermaid
+Output (task A excluded):
+```
 flowchart TD
     id0["task B"]
+
+---FILTERED_RELATIONS---
+
 ```
+(No relations remain because task A is done.)
 
 Example with JSON:
 ```bash

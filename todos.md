@@ -66,19 +66,7 @@ nodes:
 
 relations:
     - ["copy some agents from x", "optimize orchestration-lead agent"]
-    - ["optimize orchestration-lead agent", "add a plan skill"]
-    - ["optimize-skill skill", "agent-evolutionist agent"]
     - ["optimize orchestration-lead agent", "agent-evolutionist agent"]
-    - ["optimize-skill skill", "skill explore-github"]
-    - ["技术方案调研专家agent", "optimize orchestration-lead agent"]
-    - ["skill explore-github", "技术方案调研专家agent"]
-    - ["技术方案调研专家agent", "技术文章审稿专家agent"]
-    - ["optimize-skill skill", "learning context Engineering & Prompt Engineering"]
-    - ["develop-skill skill", "package-snapshot skill"]
-    - ["learn skill-creator plugin", "skill explore-github"]
-    - ["learn skill-creator plugin", "package-snapshot skill"]
-    - ["费曼学习法 agent or skill", "技术方案调研专家 agent"]
-    - ["skill context-manage", "skill explore-github"]
     - ["learn plugin-dev plugin", "copy some agents from x"]
     - ["learn plugin-dev plugin", "技术文章审稿专家agent"]
 ```

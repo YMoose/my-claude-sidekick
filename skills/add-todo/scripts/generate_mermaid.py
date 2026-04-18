@@ -117,6 +117,17 @@ def generate_mermaid(nodes: List[Dict], relations: List[Tuple[str, str]]) -> str
     return "\n".join(lines)
 
 
+def filter_relations(nodes: List[Dict], relations: List[Tuple[str, str]]) -> List[Tuple[str, str]]:
+    """Return only relations between active (non-done) nodes."""
+    active_names = {n.get("name", n.get("task", "")) for n in nodes if n.get("state", "").lower() != "done"}
+    return [(f, t) for f, t in relations if f in active_names and t in active_names]
+
+
+def format_relations_yaml(relations: List[Tuple[str, str]]) -> str:
+    """Format filtered relations as YAML lines."""
+    return "\n".join(f'    - ["{f}", "{t}"]' for f, t in relations)
+
+
 def main():
     if len(sys.argv) < 2:
         print("Usage: python generate_mermaid.py '<yaml_or_json_string>'")
@@ -134,7 +145,14 @@ def main():
         print("Error: No nodes found in input")
         sys.exit(1)
 
+    active_relations = filter_relations(nodes, relations)
+
+    # Output mermaid
     print(generate_mermaid(nodes, relations))
+
+    # Separator and filtered relations
+    print("\n---FILTERED_RELATIONS---")
+    print(format_relations_yaml(active_relations))
 
 
 if __name__ == "__main__":
