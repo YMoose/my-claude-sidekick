@@ -10,7 +10,7 @@ For big-picture orientation only, harness engineering breaks a general task into
 
 This step is mainly about the `researching` part. Start by understanding the user's intent and then research and gather information to make sure the plan is concrete, feasible, and executable.
 
-Do not keep the results of context gathering and research only in your working memory, Use [Research Report Template](templates/research-report-template.md) and distill what you learned and what you and user decided into the research report (`SURVEY.md`).
+Do not keep the results of context gathering and research only in your working memory, Use [Research Report Template](templates/research-report-template.md) and distill what you learned and what you and user decided into the research report (`RESERACH.md`).
 
 ### Use the existing context first
 
@@ -44,9 +44,9 @@ If a reasoned inference is not possible, explain the issue clearly and ask the u
 
 ### Acceptance criteria in the `researching` part
 
-**SURVEY.md**
+**RESERACH.md**
 
-NON-NEGOTIABLE REQUIREMENTS for `SURVEY.md`:
+NON-NEGOTIABLE REQUIREMENTS for `RESERACH.md`:
 
 - No missing part that the downstream planner might need. The report must fully contain all mandatory sections defined by the [template](templates/research-report-template.md).
 - No open question that would materially block drafting a concrete and executable plan. 
@@ -56,7 +56,7 @@ NON-NEGOTIABLE REQUIREMENTS for `SURVEY.md`:
 
 ## Reference files
 
-- `templates/research-report-template.md`: Template for the research report (`SURVEY.md`), defining all mandatory sections.
+- `templates/research-report-template.md`: Template for the research report (`RESERACH.md`), defining all mandatory sections.
 - `references/schemas.md`: JSON formats for eval prompts, grading outputs, comparison outputs, and iteration history.
 - `references/planning-focus-by-task-type.md`: Guide to broaden research scope and dimensions by task type.
 - `agents/grader.md`: Instructions for grading one plan revision.
