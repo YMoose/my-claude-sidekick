@@ -28,7 +28,7 @@ nodes:
         state: pending
         create_time: 2026-02-25
     - "skill explore-github":
-        state: pending
+        state: done
         create_time: 2026-02-25
     - "技术方案调研专家agent":
         state: pending
@@ -83,18 +83,13 @@ flowchart TD
     20260225_0["copy some agents from x"]
     20260225_1["optimize orchestration-lead agent"]
     20260225_2["agent-evolutionist agent"]
-    20260225_3["skill explore-github"]
-    20260225_4["技术方案调研专家agent"]
-    20260225_5["技术文章审稿专家agent"]
-    20260226_6["learning context Engineering & Prompt Engineering"]
-    20260311_7["learn skill-creator plugin"]
-    20260403_8["skill context-manage"]
+    20260225_3["技术方案调研专家agent"]
+    20260225_4["技术文章审稿专家agent"]
+    20260226_5["learning context Engineering & Prompt Engineering"]
+    20260311_6["learn skill-creator plugin"]
 
     20260225_0 --> 20260225_1
     20260225_1 --> 20260225_2
-    20260225_4 --> 20260225_1
+    20260225_3 --> 20260225_1
     20260225_3 --> 20260225_4
-    20260225_4 --> 20260225_5
-    20260311_7 --> 20260225_3
-    20260403_8 --> 20260225_3
 ```
