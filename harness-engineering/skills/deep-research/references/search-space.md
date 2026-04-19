@@ -145,7 +145,7 @@ Technical research involving code, frameworks, libraries, APIs, and development 
     limitation: Opinions or real-world gotchas — docs describe intended behavior, not actual edge cases
     tool_hint: web_search
 - GitHub:
-    overview: Star count reflects popularity, not quality—10K+ stars indicate wide adoption but not necessarily correctness. Instead, consider the last commit date, issue response time, and contributor count. A well-written README often signals a higher-quality project.
+    overview: Star count reflects popularity, not quality—10K+ stars indicate wide adoption but not necessarily correctness. Instead, consider the last commit date, issue response time, and contributor count. A well-written README often signals a higher-quality project. When the user mentions specific repos or libraries, extract that repo's topics/tags relevant to the research domain, and use them to search for high-star related projects in the same domain — topics are curated by maintainers and surface ecosystem-adjacent tools that keyword search often misses.
     strength: Finding source code, libraries, and active projects
     limitation: Not ideal for high-level explanations or comparisons
     url: https://github.com/
