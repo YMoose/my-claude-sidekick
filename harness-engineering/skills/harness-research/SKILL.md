@@ -20,13 +20,15 @@ If the user already has a draft plan, audit that draft before rewriting it.
 
 ### Research beyond the existing context
 
-Use this step to validate or refine your understanding, surface important considerations the user may not have mentioned or considered and learn from useful approaches in similar tasks or prior solutions.
+Use this step to validate or refine your understanding, surface important considerations the user may not have mentioned or considered and learn from useful approaches in similar tasks or prior solutions. Using [deep-researcher agents](./agents/deep-researcher.md) will do lots of help here.
 
 Use the [Planning Focus by Task Type](references/planning-focus-by-task-type.md) as guide to broaden and diversify the scope and dimensions of the research.
 
 Proactively search for relevant external knowledge when it will improve the quality of the plan. This may include web search, Google, Google Scholar, GitHub, official documentation, standards, papers, issue threads, and similar projects or implementations. Use external research to discover prior art, validate feasibility, compare approaches, identify hidden risks, and find practical implementation patterns that should shape the plan.
 
-For well-defined and decomposable research scopes (e.g., covering both academic literature and open-source implementations), you may spawn [deep-researcher agents](./agents/deep-researcher.md) to explore different angles. The deep-researcher agents have their own approach to getting things done, so there’s no need to lay out the specific method when you assign the task to them. They can save your context space and time. Each agent is given a clear **context and objective**—for example: *"Look into RAG evaluation metrics in recent academic papers"* or *"Find active GitHub projects implementing local LLM inference."* Collect and merge their results into your main research log during synthesis.
+For well-defined and decomposable research scopes (e.g., covering both academic literature and open-source implementations), you'd better spawn [deep-researcher agents](./agents/deep-researcher.md) to explore different angles. The deep-researcher agents have their own approach to getting things done, so there’s no need to lay out the specific method when you assign the task to them. They can save your context space and time. Each agent is given a clear **context and objective**—for example: *"Look into RAG evaluation metrics in recent academic papers"* or *"Find active GitHub projects implementing local LLM inference."* Collect and merge their results into your main research log during synthesis.
+
+> Monitor subagent status — if you encounter concurrency limits or rate limiting, reduce parallelism, spawn fewer agents at a time and try again.
 
 To avoid analysis paralysis, stop researching and start documenting when:
 
